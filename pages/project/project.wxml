@@ -20,7 +20,7 @@
   <view class='phonePop'>
     <text class='phonePopText1'>请输入预留手机号</text>
     <text class='phonePopText2'>以查找您的相关项目</text>
-    <input class='phonePopInput' placeholder='手机号' bindinput="bindinput" type='number'></input>
+    <input class='phonePopInput' placeholder='手机号' bindinput="bindinput" type='number' value='{{userPhone}}'></input>
     <button class='btn-reset phonePopBtn' open-type='getUserInfo' bindgetuserinfo="bindgetuserinfo">查找项目</button>
   </view>
 </view>

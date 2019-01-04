@@ -45,7 +45,7 @@ Page({
   //保存用户信息
   bindgetuserinfo(res){
     var that = this;
-    if(res.detail.userInfo && that.data.userPhone){
+    if(res.detail.userInfo && that.data.userPhone.length==11){
       var userInfo = res.detail.userInfo;
       console.log(userInfo)
       fn.http({
@@ -61,7 +61,7 @@ Page({
           phone: that.data.userPhone
         },
         success: function (res) {
-          if(res.data==""){
+          if(res.data==""){//保存用户信息成功，更新用户信息
             fn.http({
               param: {user_id: app.globalData.user_id},
               url: app.globalData.txUrl + '/CustomerWexx',
@@ -70,13 +70,32 @@ Page({
                 app.globalData.userState = res.code,//1服务人员 2客户 3普通人员
                 app.globalData.userStateName = res.msg
                 app.globalData.userPhone = res.phone;
+                that.setData({
+                  userState: app.globalData.userState
+                })
                 var listUrl;
-                if (app.globalData.userState==1){
-                  listUrl = app.globalData.txUrl + 'ProjectPersonal'
-                } else if (app.globalData.userState == 2){
+                // if (app.globalData.userState==1){
+                //   listUrl = app.globalData.txUrl + 'ProjectPersonal'
+                // } else if (app.globalData.userState == 2){
 
-                }else{
+                // }else{
+                //   that.searchPro();
+                // }
+                if (app.globalData.userState == 3) {
+                  that.setData({
+                    tab: 2
+                  })
                   that.searchPro();
+                } else if (app.globalData.userState == 1) {
+                  that.setData({
+                    tab: 1
+                  })
+                  that.getProjectPersonal('/ProjectPersonal');
+                } else {
+                  that.setData({
+                    tab: 1
+                  })
+                  that.getProjectPersonal('/ProjectCustomer');
                 }
               }
             })
@@ -84,7 +103,14 @@ Page({
         }
       })
     }else{
-      console.log("输入手机号")
+      wx.showModal({
+        title: '提示',
+        content: '请输入正确手机号',
+        showCancel:false
+      })
+      that.setData({
+        userPhone:null
+      })
     }
   },
   // 输入手机号

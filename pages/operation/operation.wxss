@@ -180,7 +180,7 @@ page{
 }
 .service1Center2 text{
   display: inline-block;
-  width: 238rpx;
+  width: 250rpx;
 }
 .service1Center{
   width: 100%;
@@ -201,7 +201,7 @@ page{
   font-weight: normal;
 }
 .service1Center text{
-  width: 238rpx;
+  width: 250rpx;
 }
 .service1Center text:first-child{
   margin-left: 48rpx;

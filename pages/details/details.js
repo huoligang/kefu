@@ -79,9 +79,12 @@ Page({
         var alength;
         var blength;
         var clength;
-        alength = res.data.personals.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
-        blength = res.data.team.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
-        clength = res.data.engineering.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
+        // alength = res.data.personals.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
+        // blength = res.data.team.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
+        // clength = res.data.engineering.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
+        alength = Math.ceil(res.data.personals.length / 2);
+        blength = Math.ceil(res.data.team.length / 2);
+        clength = Math.ceil(res.data.engineering.length / 2);
 
         for (var i in res.data[1].node) {
           if (i) {
@@ -98,6 +101,7 @@ Page({
           tab2Length: tab2Length,
           headHeight: alength + blength + clength - 3
         })
+        console.log()
       }
     })
   },

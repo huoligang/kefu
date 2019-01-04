@@ -51,6 +51,7 @@ App({
   globalData: {
     userInfo: null,
     user_id:2,
-    txUrl: 'http://7dk22a.natappfree.cc/kf/kf/public/api'
+    txUrl: 'http://kfx.dyrs.com.cn/api'
+    // txUrl:'http://ihh26n.natappfree.cc/kf/kf/public/api'
   }
 })

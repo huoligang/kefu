@@ -13,7 +13,7 @@
         <image class='serviceImg3' src='/images/img4.jpg'></image>
         <text class='serviceText2'>服务人员</text>
       </view>
-      <view class='service1Center'>
+      <view class='service1Center2'>
         <block wx:for="{{projectData.personals}}" wx:key="">
           <text>{{item.role_name}}：{{item.personal_name}}</text>
         </block>

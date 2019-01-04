@@ -68,9 +68,12 @@ Page({
         var alength;
         var blength;
         var clength;
-        alength = res.data.personals.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
-        blength = res.data.team.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
-        clength = res.data.engineering.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
+        // alength = res.data.personals.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
+        // blength = res.data.team.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
+        // clength = res.data.engineering.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
+        alength = Math.ceil(res.data.personals.length / 2);
+        blength = Math.ceil(res.data.team.length / 2);
+        clength = Math.ceil(res.data.engineering.length / 2);
         
         for (var i in res.data[1].node) {
           if (i) {
@@ -235,15 +238,31 @@ Page({
       wx.showLoading({
         title: '上传中',
       })
+      var once = true
       for (var i in that.data.cameraData){
-        imgData = {
-          // details_image: that.data.cameraData,
-          project_id: that.data.p_id,  //rule_id personal_id  
-          project_name: app.globalData.proData.project_name,
-          rule_id: that.data.nowData.id,
-          personal_id: app.globalData.user_id,
-          personal_name: app.globalData.user_name,
-          // type_id: that.data.nodeTitleIndex,
+        if (once){
+          imgData = {
+            // details_image: that.data.cameraData,
+            project_id: that.data.p_id,  //rule_id personal_id  
+            project_name: app.globalData.proData.project_name,
+            rule_id: that.data.nowData.id,
+            personal_id: app.globalData.user_id,
+            personal_name: app.globalData.user_name,
+            sum:1
+            // type_id: that.data.nodeTitleIndex,
+          }
+          once= false
+        }else{
+          imgData = {
+            // details_image: that.data.cameraData,
+            project_id: that.data.p_id,  //rule_id personal_id  
+            project_name: app.globalData.proData.project_name,
+            rule_id: that.data.nowData.id,
+            personal_id: app.globalData.user_id,
+            personal_name: app.globalData.user_name,
+            sum:2
+            // type_id: that.data.nodeTitleIndex,
+          }
         }
         wx.uploadFile({
           url: app.globalData.txUrl + '/ProjectEnd',
