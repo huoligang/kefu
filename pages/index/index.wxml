@@ -1,0 +1,135 @@
+<view class='continer'>
+<!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>  -->
+  <view class='box1'>
+    <image class='test1Img' src='/images/test1.jpg'></image>
+    <view class='box1Section'>
+      <view class='box1List'>
+        <text class='text1'>21年</text>
+        <text class='text2'>沉淀发展</text>
+      </view>
+      <view class='box1List'>
+        <text class='text1'>55项</text>
+        <text class='text2'>国家专利</text>
+      </view>
+      <view class='box1List'>
+        <text class='text1'>50万</text>
+        <text class='text2'>客户选择</text>
+      </view>
+      <view class='box1List'>
+        <text class='text1'>上市品质</text>
+        <text class='text2'>国家监督</text>
+      </view>
+    </view>
+  </view>
+  <view class='box2'>
+    <view class='titleBox' style='margin:48rpx 0 40rpx 0;'>
+      <text class='red'>专业</text>
+      <text>影响结果 </text>
+      <text class='red'>细节</text>
+      <text>决定成败</text>
+    </view>
+    <image class='test2Img' src='/images/test2.jpg'></image>
+  </view>
+  <view class='box2' style='height:526rpx;background:#f3f3f3;'>
+    <view class='titleBox' style='margin:48rpx 0 40rpx 0;'>
+      <text class='red'>精心</text>
+      <text>严选 </text>
+      <text class='red'>品质</text>
+      <text>护航</text>
+    </view>
+    <image class='test3Img' src='/images/test3.jpg'></image>
+  </view>
+  <view class='box2' style='height:682rpx;background:#141414;'>
+    <view class='titleBox' style='margin:64rpx 0 94rpx 0;color:#ffffff;'>
+      <text class='red'>匠心</text>
+      <text>工艺 </text>
+      <text class='red'>科技</text>
+      <text>引领</text>
+    </view>
+    <image class='test4Img' src='/images/test4.jpg'></image>
+  </view>
+  <view class='boxSwiper'>
+    <view class='titleBox' style='margin:62rpx 0 50rpx 0;'>
+      <text class='red'>设计</text>
+      <text>是灵魂 </text>
+      <text class='red'>工程</text>
+      <text>是生命</text>
+    </view>
+    <swiper class='swiperBox' autoplay indicator-dots indicator-active-color="#e74c3c" circular>
+      <swiper-item><image class='test5Img' src='/images/test5.jpg'></image></swiper-item>
+      <swiper-item><image class='test5Img' src='/images/ss1.jpg'></image></swiper-item>
+      <swiper-item><image class='test5Img' src='/images/ss2.jpg'></image></swiper-item>
+      <swiper-item><image class='test5Img' src='/images/ss3.jpg'></image></swiper-item>
+      <swiper-item><image class='test5Img' src='/images/ss4.jpg'></image></swiper-item>
+    </swiper>
+  </view>
+  <image class='test6Img' src='/images/test6.jpg'></image>
+  <view class='boxLast'>
+    <view class='titleBox' style='margin:78rpx 0 55rpx 0;'>
+      <text class='red'>8级</text>
+      <text>客户服务体系</text>
+    </view>
+    <!-- 第一行 -->
+    <view class='bottomBox1'>
+      <view class='bottomList'>
+        <image class='bottomImg' src='/images/test7.jpg'></image>
+        <view class='listText'>
+          <text class='text3'>1+1完整设计</text>
+          <text class='text4'>专业审核</text>
+        </view>
+      </view>
+      <view class='bottomList'>
+        <image class='bottomImg' src='/images/test8.jpg'></image>
+        <view class='listText'>
+          <text class='text3'>水电专业设计</text>
+          <text class='text4'>杜绝顽疾</text>
+        </view>
+      </view>
+      <view class='bottomList'>
+        <image class='bottomImg' src='/images/test9.jpg'></image>
+        <view class='listText'>
+          <text class='text3'>ERP全程监控</text>
+          <text class='text4'>客户专家</text>
+        </view>
+      </view>
+      <view class='bottomList'>
+        <image class='bottomImg' src='/images/test10.jpg'></image>
+        <view class='listText'>
+          <text class='text3'>三三制回访</text>
+          <text class='text4'>监控体质</text>
+        </view>
+      </view>
+    </view>
+    <!-- 第二行 -->
+    <view class='bottomBox1'>
+      <view class='bottomList'>
+        <image class='bottomImg' src='/images/test11.jpg'></image>
+        <view class='listText'>
+          <text class='text3'>经理访工地</text>
+          <text class='text4'>责任制度</text>
+        </view>
+      </view>
+      <view class='bottomList'>
+        <image class='bottomImg' src='/images/test12.jpg'></image>
+        <view class='listText'>
+          <text class='text3'>客服快速响应</text>
+          <text class='text4'>解决问题</text>
+        </view>
+      </view>
+      <view class='bottomList'>
+        <image class='bottomImg' src='/images/test13.jpg'></image>
+        <view class='listText'>
+          <text class='text3'>阶段验收</text>
+          <text class='text4'>完整家装</text>
+        </view>
+      </view>
+      <view class='bottomList'>
+        <image class='bottomImg' src='/images/test14.jpg'></image>
+        <view class='listText'>
+          <text class='text3'>客户终身</text>
+          <text class='text4'>价值维护</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

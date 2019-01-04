@@ -1,0 +1,163 @@
+/* pages/project/project.wxss */
+.continer{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.proList{
+  width: 690rpx;
+  height: 140rpx;
+  background: #ffffff;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 0rpx 10rpx #cfcfcf;
+  margin-top: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.proLeftBg{
+  width: 11rpx;
+  height: 140rpx;
+  background: red;
+}
+.proCenterBox{
+  width: 370rpx;
+  height: 100%;
+  margin-left: 30rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 22rpx;
+}
+.proTitle{
+  width: 100%;
+  font-size: 28rpx;
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.proRightBox{
+  width: 220rpx;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  justify-content: center;
+  font-size: 22rpx;
+}
+.proListText3{
+  font-size: 24rpx;
+  margin-bottom: 20rpx;
+}
+.proNodeColor{
+  color: red;
+}
+/* 关联项目 */
+.phonePop{
+  width: 690rpx;
+  height: 530rpx;
+  border-radius: 10px;
+  /* background: red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 105rpx;
+  box-shadow: 0 5px 5px #cccccc;
+}
+.phonePopText1{
+  width: 590rpx;
+  text-align: left;
+  height: 34rpx;
+  line-height: 34rpx;
+  font-size: 34rpx;
+  color:#343434;
+  font-weight: bold;
+  margin-top: 70rpx;
+}
+.phonePopText2{
+  width: 590rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 24rpx;
+  color: #989898;
+  text-align: left;
+}
+.phonePopInput{
+  width: 590rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: left;
+  font-size: 30rpx;
+  color: #999999;
+  background: #f2f2f2;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding-left: 28rpx;
+  margin-top: 54rpx;
+}
+.phonePopBtn{
+  width: 590rpx;
+  height: 88rpx;
+  border-radius: 5px;
+  background: #e84c3d;
+  color: #ffffff;
+  font-size: 34rpx;
+  line-height: 88rpx;
+  margin-top: 49rpx;
+}
+/* end */
+/* 遮罩层 */
+.zhezhao{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(00, 00, 00, 0.7);
+  z-index: 333;
+}
+/* end */
+/* 没有找到相关项目 */
+.searchNoPop{
+  width: 550rpx;
+  height: 500rpx;
+  background: #ffffff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.searchNoPopImg1{
+  width: 320rpx;
+  height: 194rpx;
+  margin-top: 52rpx;
+}
+.searchNoPopText1{
+  width: 100%;
+  text-align: center;
+  line-height: 36rpx;
+  font-size: 24rpx;
+  color: #b6b6b6;
+  margin-top: 24rpx;
+}
+.searchNoPopBtn{
+  width: 245rpx;
+  height: 75rpx;
+  line-height: 75rpx;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 34rpx;
+  color: #ffffff;
+  background: #e84c3d;
+  margin-top: 30rpx;
+}
+/* end */

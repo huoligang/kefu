@@ -1,0 +1,34 @@
+<!-- 项目列表 -->
+<view class='continer' wx:if="{{tab==1}}">
+  <block wx:for="{{fwListData}}" wx:key="">
+    <view class='proList' catchtap='toDetails' data-p_id='{{item.project_id}}' data-list='{{item}}'>
+      <view class='proLeftBg' style='background:#{{(item.examine_status==1||item.examine_status==3)?"feae35":item.examine_status==2?"57db88":"609bff"}};'></view>
+      <view class='proCenterBox'>
+        <text class='proTitle'>{{item.project_name}}</text>
+        <text>{{item.node_name}}</text>
+      </view>
+      <view class='proRightBox'>
+        <text class='proListText3'>工程状态：<text class='proNodeColor' style='font-size:26rpx;color:#{{(item.examine_status==1||item.examine_status==3)?"feae35":item.examine_status==2?"57db88":"609bff"}};'>{{item.node_status}}</text></text>
+        <text wx:if="{{userState==1}}">客户姓名：{{item.coustomer_name}}</text>
+        <text wx:if="{{userState==2}}">主要负责人：{{item.personal_name}}</text>
+      </view>
+    </view>
+  </block>
+</view>
+<!-- 关联项目 -->
+<view class='continer' wx:if="{{tab==2}}">
+  <view class='phonePop'>
+    <text class='phonePopText1'>请输入预留手机号</text>
+    <text class='phonePopText2'>以查找您的相关项目</text>
+    <input class='phonePopInput' placeholder='手机号' bindinput="bindinput" type='number'></input>
+    <button class='btn-reset phonePopBtn' open-type='getUserInfo' bindgetuserinfo="bindgetuserinfo">查找项目</button>
+  </view>
+</view>
+<!-- 遮罩 -->
+<view class='zhezhao' wx:if="{{searchNoState}}">
+  <view class='searchNoPop'>
+    <image class='searchNoPopImg1' src='/images/img1.jpg'></image>
+    <text class='searchNoPopText1'>很抱歉！未能找到与您相关的工程项目\n请联系您的商务经理</text>
+    <button class='btn-reset searchNoPopBtn' catchtap='againSearch'>重新查找</button>
+  </view>
+</view>

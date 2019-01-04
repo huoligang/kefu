@@ -1,0 +1,73 @@
+page{
+  background: #f3f3f3;
+}
+.continer{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.noDataBox{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.noDataImg1{
+  width: 334rpx;
+  height: 204rpx;
+  margin-top: 225rpx;
+}
+.noDataText1{
+  font-size: 26rpx;
+  color: #999999;
+  width: 100%;
+  text-align: center;
+  height: 26rpx;
+  line-height: 26rpx;
+  margin-top: 40rpx;
+}
+.msgBox{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  background: #ffffff;
+}
+.msgListBox{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #dedede;
+  box-sizing: border-box;
+  padding: 20rpx 26rpx;
+  
+}
+.msgListBox:last-child{
+  border-bottom: none;
+}
+.listTop{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* margin-top: 38rpx; */
+}
+.listImg1{
+  width: 29rpx;
+  height: 34rpx;
+  margin-right: 10rpx;
+}
+.listText1{
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333333;
+}
+.listText2{
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 36rpx;
+  /* margin: 10rpx 0; */
+  margin-top: 10rpx;
+}
