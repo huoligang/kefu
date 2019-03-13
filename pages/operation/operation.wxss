@@ -35,8 +35,9 @@ page{
 }
 .servicePeopleList{
   width: 100%;
-  height: 380rpx;
+  /* height: 380rpx; */
   background: #ffffff;
+  box-sizing: border-box;
   /* border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px; */
   /* box-shadow: 0 10rpx 10rpx #cfcfcf; */
@@ -83,14 +84,14 @@ page{
         /* opacity: 0; */
     }
     to {
-        /* height:600rpx; */
+        /* height:inherit; */
         /* opacity: 1; */
     }
 }
 
 @keyframes slideup{
     from {
-        /* height: 600rpx; */
+        /* height: inherit; */
         /* opacity: 1; */
     }
     to {
@@ -144,9 +145,11 @@ page{
   display: flex;
   margin: 0 auto;
   flex-direction: column;
+  box-sizing: border-box;
   border-bottom: 1px solid #dedede;
   padding-bottom: 10rpx;
   margin-bottom: 16rpx;
+  /* background: red; */
 }
 .serviceBox1:last-child{
   border-bottom: none;
@@ -170,7 +173,7 @@ page{
 }
 .service1Center2{
   width: 100%;
-  line-height: 44rpx;
+  /* line-height: 44rpx; */
   align-items: center;
   font-size: 24rpx;
   color: #666666;
@@ -180,7 +183,10 @@ page{
 }
 .service1Center2 text{
   display: inline-block;
-  width: 250rpx;
+  width: 280rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .service1Center{
   width: 100%;
@@ -608,4 +614,12 @@ swiper-item{
 }
 .pop3Text3{
   color: #666666;
+}
+.fwText{
+  display: inline-block;
+  height: 44rpx;
+  line-height: 44rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

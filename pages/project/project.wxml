@@ -2,21 +2,23 @@
 <view class='continer' wx:if="{{tab==1}}">
   <block wx:for="{{fwListData}}" wx:key="">
     <view class='proList' catchtap='toDetails' data-p_id='{{item.project_id}}' data-list='{{item}}'>
-      <view class='proLeftBg' style='background:#{{(item.examine_status==1||item.examine_status==3)?"feae35":item.examine_status==2?"57db88":"609bff"}};'></view>
+    <!-- 1 计划中 2 进展中 3 延期 4完成 -->
+      <view class='proLeftBg' style='background:#{{item.examine_status==1?"609bff":item.examine_status==2?"feae35":item.examine_status==3?"feae35":"57db88"}};'></view>
       <view class='proCenterBox'>
         <text class='proTitle'>{{item.project_name}}</text>
-        <text>{{item.node_name}}</text>
+        <text style='color:#a0a0a0;'>{{item.node_name}}</text>
       </view>
       <view class='proRightBox'>
-        <text class='proListText3'>工程状态：<text class='proNodeColor' style='font-size:26rpx;color:#{{(item.examine_status==1||item.examine_status==3)?"feae35":item.examine_status==2?"57db88":"609bff"}};'>{{item.node_status}}</text></text>
-        <text wx:if="{{userState==1}}">客户姓名：{{item.coustomer_name}}</text>
-        <text wx:if="{{userState==2}}">主要负责人：{{item.personal_name}}</text>
+        <text class='proListText3' style='color:#666666;'>工程状态：<text class='proNodeColor' style='font-size:26rpx;color:#{{item.examine_status==1?"5f9bfd":item.examine_status==2?"feae33":item.examine_status==3?"f27535":"56db8a"}};'>{{item.node_status}}</text></text>
+        <text wx:if="{{userState==1}}" style='color:#a0a0a0;'>客户姓名：{{item.coustomer_name}}</text>
+        <text wx:if="{{userState==2}}" style='color:#a0a0a0;width:100%;display: inline-block;  overflow: hidden;  text-overflow: ellipsis;  white-space: nowrap;'>主要负责人：{{item.personal_name}}</text>
       </view>
     </view>
   </block>
 </view>
 <!-- 关联项目 -->
 <view class='continer' wx:if="{{tab==2}}">
+  <image class='pbgImg' src='/images/pbg.png'></image>
   <view class='phonePop'>
     <text class='phonePopText1'>请输入预留手机号</text>
     <text class='phonePopText2'>以查找您的相关项目</text>

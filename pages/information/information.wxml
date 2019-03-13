@@ -1,6 +1,6 @@
 <view class='continer'>
   <!-- 没有数据 -->
-  <view class='noDataBox' wx:if="{{!msgData}}">
+  <view class='noDataBox' wx:if="{{!msgData && is_load}}">
     <image class='noDataImg1' src='/images/img11.png'></image>
     <text class='noDataText1'>暂无消息</text>
   </view>
@@ -10,7 +10,7 @@
       <view class='msgListBox'>
         <view class='listTop'>
           <image class='listImg1' src='/images/img12.png'></image>
-          <text class='listText1'>{{item.node_name}}</text>
+          <text class='listText1' style='color:{{item.grade==1?"yellow":item.grade==2?"orange":item.grade==3?"red":""}};'>{{item.node_name}}</text>
         </view>
         <text class='listText2'>{{item.mesg}}</text>
       </view>

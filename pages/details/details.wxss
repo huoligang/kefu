@@ -165,7 +165,7 @@ page{
 }
 .service1Center2 text{
   display: inline-block;
-  width: 250rpx;
+  width: 280rpx;
 }
 .service1Center{
   width: 100%;
@@ -398,4 +398,10 @@ page{
     to {
         transform: rotate(0deg);
     }
+}
+.fwText{
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

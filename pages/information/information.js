@@ -7,13 +7,37 @@ Page({
    */
   data: {
     noDataState: true,//没有数据
+    is_load:false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.showLoading({
+      title: '加载中...',
+    })
+    var that = this;
+    app.getUserOpenId().then(function () {
+      fn.http({
+        url: app.globalData.txUrl + '/ProjectMesg',
+        param: {
+          user_id: app.globalData.userMsgState ? app.globalData.userMsgState : "",//id
+          type_id: app.globalData.userState //code
+        },
+        success: function (res) {
+          wx.hideLoading();
+          if (res.data){
+            that.setData({
+              msgData: res.data
+            })
+          }
+          that.setData({
+            is_load: true
+          })
+        }
+      })
+    })
   },
 
   /**
@@ -28,19 +52,23 @@ Page({
    */
   onShow: function () {
     var that = this;
-    fn.http({
-      url: app.globalData.txUrl + '/ProjectMesg',
-      param: {
-        user_id:app.globalData.user_id,
-        type_id: app.globalData.userMsgState
-      },
-      success: function (res) {
-        console.log(res)
-        that.setData({
-          msgData: res.data
-        })
-      }
-    })
+    if (that.data.is_load){
+      fn.http({
+        url: app.globalData.txUrl + '/ProjectMesg',
+        param: {
+          user_id: app.globalData.userMsgState ? app.globalData.userMsgState : "",//id
+          type_id: app.globalData.userState //code
+        },
+        success: function (res) {
+          if(res.data){
+            that.setData({
+              msgData: res.data
+            })
+          }
+        }
+      })
+    }
+    
   },
 
   /**

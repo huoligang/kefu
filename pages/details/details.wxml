@@ -6,40 +6,40 @@
     <image class='serviceImg2 {{first_click==2?"triangle2":first_click==3?"triangle4":""}} {{state?"rotate180":"rotate0"}}' src='/images/img3.jpg'></image>
   </view>
   <!-- 服务人员名单 -->
-  <view class="servicePeopleList {{first_click==2?'open':'close'}} {{state?'show':'hide'}}" style='height:{{336+(headHeight*44)}}rpx;'>
+  <view class="servicePeopleList {{first_click==2?'open':'close'}} {{state?'show':'hide'}}" style='height:{{178+(headHeight*22)}}px;'>
     <!-- 服务人员 -->
-    <view class='serviceBox1'>
+    <view class='serviceBox1' wx:if="{{projectData.personals!=''}}">
       <view class='service1Top'>
         <image class='serviceImg3' src='/images/img4.jpg'></image>
         <text class='serviceText2'>服务人员</text>
       </view>
       <view class='service1Center2'>
         <block wx:for="{{projectData.personals}}" wx:key="">
-          <text>{{item.role_name}}：{{item.personal_name}}</text>
+          <text  class='fwText'>{{item.role_name}}：{{item.personal_name}}</text>
         </block>
       </view>
     </view>
     <!-- 设计团队 -->
-    <view class='serviceBox1'>
+    <view class='serviceBox1' wx:if="{{projectData.team!=''}}">
       <view class='service1Top'>
         <image class='serviceImg3' src='/images/img5.jpg'></image>
         <text class='serviceText2'>设计团队</text>
       </view>
       <view class='service1Center2'>
         <block wx:for="{{projectData.team}}" wx:key="">
-          <text>{{item.role_name}}：{{item.personal_name}}</text>
+          <text  class='fwText'>{{item.role_name}}：{{item.personal_name}}</text>
         </block>
       </view>
     </view>
     <!-- 工程人员 -->
-    <view class='serviceBox1'>
+    <view class='serviceBox1' wx:if="{{projectData.engineering!=''}}">
       <view class='service1Top'>
         <image class='serviceImg3' src='/images/img6.jpg'></image>
         <text class='serviceText2'>工程人员</text>
       </view>
       <view class='service1Center2'>
         <block wx:for="{{projectData.engineering}}" wx:key="">
-          <text>{{item.role_name}}：{{item.personal_name}}</text>
+          <text  class='fwText'>{{item.role_name}}：{{item.personal_name}}</text>
         </block>
       </view>
     </view>
@@ -50,8 +50,8 @@
   <view class='nodeSection'>
     <!-- 节点Tab -->
     <view class='nodeTitle'>
-      <text class='nodeTitleText1 {{nodeTitleIndex==1?"nodeTitleActive":""}}' catchtap='tabNodeTitle' data-idx='1'>工程节点</text> 
-      <text class='nodeTitleText1 {{nodeTitleIndex==2?"nodeTitleActive":""}}' catchtap='tabNodeTitle' data-idx='2'>木作节点</text>
+      <text class='nodeTitleText1 {{nodeTitleIndex==1?"":"nodeTitleActive"}}' catchtap='tabNodeTitle' data-idx='1'>工程节点</text> 
+      <text class='nodeTitleText1 {{nodeTitleIndex==2?"":"nodeTitleActive"}}' catchtap='tabNodeTitle' data-idx='2'>木作节点</text>
     </view>
     <!-- 工程节点 -->
     <view class='nodeListBox' wx:if="{{nodeTitleIndex==1}}">
@@ -59,12 +59,12 @@
       <view class='nodeListBoxRight'>
         <!-- 列表详情 -->
         <block wx:for="{{projectData[1].node}}" wx:key="">
-          <view class='nodeList' catchtap='seeDetails' data-list='{{item.first}}' data-state='{{item.node_status}}' data-idx='{{index}}'>
+          <view class='nodeList' catchtap='seeDetails' data-list='{{item.first}}' data-state='{{item.node_status}}' data-idx='{{index}}' style='background:#{{item.node_status==2?"eefbf3":(item.node_status==1 || item.node_status==3)?"eef5ff":"eef5ff"}};'>
             <!-- 标识点 -->
             <text class='nodeListDot' style='background:#{{item.node_status==2?"56db88":(item.node_status==1 || item.node_status==3)?"feae33":"609bff"}};'></text>
             <view class='nodeListLeftBg' style='background:#{{item.node_status==2?"56db88":(item.node_status==1 || item.node_status==3)?"feae33":"609bff"}};'></view>
             <text class='nodeName'>{{item.node_name}}</text>
-            <text class='nodeState'>工程状态：<text style='font-size:24rpx;font-weight:bold;color:#{{item.node_status==2?"56db88":item.node_status==1?"feae33":item.node_status==3?"fd343e":"609bff"}};'>{{item.node_status==2?"完工":item.node_status==1?"进展中":item.node_status==3?"延期":"计划中"}}</text></text>
+            <text class='nodeState'>工程状态：<text style='font-size:24rpx;font-weight:bold;color:#{{item.node_status==2?"56db88":item.node_status==1?"feae33":item.node_status==3?"fd343e":"609bff"}};'>{{item.node_status==2?"完成":item.node_status==1?"进展中":item.node_status==3?"延期":"计划中"}}</text></text>
           </view>
         </block>
       </view>
@@ -82,12 +82,12 @@
       <view class='nodeListBoxRight' wx:if="{{projectData[2]}}">
         <!-- 列表详情 -->
         <block wx:for="{{projectData[2].node}}" wx:key="">
-          <view class='nodeList' catchtap='seeDetails' data-list='{{item.first}}' data-state='{{item.node_status}}' data-idx='{{index}}'>
+          <view class='nodeList' catchtap='seeDetails' data-list='{{item.first}}' data-state='{{item.node_status}}' data-idx='{{index}}' style='background:#{{item.node_status==2?"eefbf3":(item.node_status==1 || item.node_status==3)?"eef5ff":"eef5ff"}};'>
             <!-- 标识点 -->
             <text class='nodeListDot' style='background:#{{item.node_status==2?"56db88":(item.node_status==1 || item.node_status==3)?"feae33":"609bff"}};'></text>
             <view class='nodeListLeftBg' style='background:#{{item.node_status==2?"56db88":(item.node_status==1 || item.node_status==3)?"feae33":"609bff"}};'></view>
             <text class='nodeName'>{{item.node_name}}</text>
-            <text class='nodeState'>工程状态：<text style='font-size:24rpx;font-weight:bold;color:#{{item.node_status==2?"56db88":item.node_status==1?"feae33":item.node_status==3?"fd343e":"609bff"}};'>{{item.node_status==2?"完工":item.node_status==1?"进展中":item.node_status==3?"延期":"计划中"}}</text></text>
+            <text class='nodeState'>木作状态：<text style='font-size:24rpx;font-weight:bold;color:#{{item.node_status==2?"56db88":item.node_status==1?"feae33":item.node_status==3?"fd343e":"609bff"}};'>{{item.node_status==2?"完成":item.node_status==1?"进展中":item.node_status==3?"延期":"计划中"}}</text></text>
           </view>
         </block>
       </view>
@@ -104,7 +104,7 @@
     </view>
     <!-- 1完成 2进展中 3延期 0计划中 -->
     <text class='pop1Text2' wx:if="{{ (pop1NameState==3 || pop1NameState==1 || pop1NameState==0)&& pop1ClickIdx!=1}}">计划开始日期：<text class='pop1Text3'>{{pop1Data.plan_start_time}}</text></text>
-    <text class='pop1Text2' >{{pop1NameState==2?'':'计划'}}完成日期：<text class='pop1Text3'>{{pop1Data.plan_end_time}}</text></text>
+    <text class='pop1Text2' >{{pop1NameState==2?'':'计划'}}完成日期：<text class='pop1Text3'>{{pop1NameState==2?pop1Data.end_time:pop1Data.plan_end_time}}</text></text>
     <text class='pop1Text2' wx:if="{{pop1NameState==3 || pop1NameState==1}}">开始日期：<text class='pop1Text3'>{{pop1Data.start_time}}</text></text>
     <text class='pop1Text2'>节点负责人：<text class='pop1Text3'>{{pop1Data.personal_name}}</text></text>
     <text class='pop1Text2' wx:if="{{pop1NameState==2 && pop1ClickIdx!=1}}" pop1NameState>节点申请人：<text class='pop1Text3'>{{pop1Data.detail_name}}</text></text>

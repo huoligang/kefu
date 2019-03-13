@@ -8,18 +8,12 @@ Page({
   data: {
     
   },
-  getPhoneNumber(e) {
-    console.log(e.detail.errMsg)
-    console.log(e.detail.iv)
-    console.log(e.detail.encryptedData)
-  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.getUserOpenId().then(function(){
-      console.log("123")
-    })
+    // app.getUserOpenId().then(function(){
+    // })
   },
 
   /**
@@ -33,7 +27,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
   },
 
   /**

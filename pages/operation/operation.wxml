@@ -7,40 +7,40 @@
     <image class='serviceImg2 {{first_click==2?"triangle2":first_click==3?"triangle4":""}} {{state?"rotate180":"rotate0"}}' src='/images/img3.jpg'></image>
   </view>
   <!-- 服务人员名单 -->
-  <view class="servicePeopleList {{first_click==2?'open':'close'}} {{state?'show':'hide'}}" style='height:{{336+(headHeight*44)}}rpx;'>
+  <view class="servicePeopleList {{first_click==2?'open':'close'}} {{state?'show':'hide'}}" style='height:{{178+(headHeight*22)}}px;'>
     <!-- 服务人员 -->
-    <view class='serviceBox1'>
+    <view class='serviceBox1' wx:if="{{projectData.personals!=''}}">
       <view class='service1Top'>
         <image class='serviceImg3' src='/images/img4.jpg'></image>
         <text class='serviceText2'>服务人员</text>
       </view>
       <view class='service1Center2'>
         <block wx:for="{{projectData.personals}}" wx:key="">
-          <text>{{item.role_name}}：{{item.personal_name}}</text>
+          <text class='fwText'>{{item.role_name}}：{{item.personal_name}}</text>
         </block>
       </view>
     </view>
     <!-- 设计团队 -->
-    <view class='serviceBox1'>
+    <view class='serviceBox1' wx:if="{{projectData.team!=''}}">
       <view class='service1Top'>
         <image class='serviceImg3' src='/images/img5.jpg'></image>
         <text class='serviceText2'>设计团队</text>
       </view>
       <view class='service1Center2'>
         <block wx:for="{{projectData.team}}" wx:key="">
-          <text>{{item.role_name}}：{{item.personal_name}}</text>
+          <text class='fwText'>{{item.role_name}}：{{item.personal_name}}</text>
         </block>
       </view>
     </view>
     <!-- 工程人员 -->
-    <view class='serviceBox1'>
+    <view class='serviceBox1' wx:if="{{projectData.engineering!=''}}">
       <view class='service1Top'>
         <image class='serviceImg3' src='/images/img6.jpg'></image>
         <text class='serviceText2'>工程人员</text>
       </view>
       <view class='service1Center2'>
         <block wx:for="{{projectData.engineering}}" wx:key="">
-          <text>{{item.role_name}}：{{item.personal_name}}</text>
+          <text class='fwText'>{{item.role_name}}：{{item.personal_name}}</text>
         </block>
       </view>
     </view>
@@ -51,26 +51,29 @@
   <view class='nodeSection'>
     <!-- 节点Tab -->
     <view class='nodeTitle'>
-      <text class='nodeTitleText1 {{nodeTitleIndex==1?"nodeTitleActive":""}}' catchtap='tabNodeTitle' data-idx='1'>工程节点</text> 
-      <text class='nodeTitleText1 {{nodeTitleIndex==2?"nodeTitleActive":""}}' catchtap='tabNodeTitle' data-idx='2'>木作节点</text>
+      <text class='nodeTitleText1 {{nodeTitleIndex==1?"":"nodeTitleActive"}}' catchtap='tabNodeTitle' data-idx='1'>工程节点</text>
+      <text class='nodeTitleText1 {{nodeTitleIndex==2?"":"nodeTitleActive"}}' catchtap='tabNodeTitle' data-idx='2'>木作节点</text>
     </view>
     <!-- 工程节点 -->
     <view class='nodeListBox' wx:if="{{nodeTitleIndex==1}}">
-      <view class='nodeListBoxLeftLine' style='height:{{tab1Length*110-40}}rpx;'><text class='line40'></text><text class='line100'></text><text class='line40'></text></view>
+      <view class='nodeListBoxLeftLine' style='height:{{tab1Length*110-40}}rpx;'>
+        <text class='line40'></text>
+        <text class='line100'></text>
+        <text class='line40'></text>
+      </view>
       <view class='nodeListBoxRight'>
         <!-- 列表详情 -->
         <block wx:for="{{projectData[1].node}}" wx:key="">
-          <view class='nodeList' catchtap='seeDetails' data-list='{{item.first}}' data-state='{{item.node_status}}' data-idx='{{index}}' data-nid='{{item.id}}'>
+          <view class='nodeList' catchtap='seeDetails' data-list='{{item.first}}' data-state='{{item.node_status}}' data-idx='{{index}}' data-nid='{{item.id}}' style='background:#{{item.node_status==2?"eefbf3":(item.node_status==1 || item.node_status==3)?"eef5ff":"eef5ff"}};'>
             <!-- 标识点 -->
             <text class='nodeListDot' style='background:#{{item.node_status==2?"56db88":(item.node_status==1 || item.node_status==3)?"feae33":"609bff"}};'></text>
             <view class='nodeListLeftBg' style='background:#{{item.node_status==2?"56db88":(item.node_status==1 || item.node_status==3)?"feae33":"609bff"}};'></view>
             <text class='nodeName'>{{item.node_name}}</text>
-            <text class='nodeState' wx:if="{{item.node_status==2}}" style='color:#56db88;'>完成日期：<text style='font-weight:normal;color:#676767;'>{{item.plan_end_time}}</text></text>
+            <text class='nodeState' wx:if="{{item.node_status==2}}" style='color:#56db88;'>完成日期：<text style='font-weight:normal;color:#676767;'>{{item.end_time}}</text></text>
 
-            <text class='nodeState' wx:if="{{item.node_status==1 || item.node_status==3}}" style='color:#feae33;'>开始日期：<text style='font-weight:normal;color:#676767;'>{{item.plan_end_time}}</text></text>
+            <text class='nodeState' wx:if="{{item.node_status==1 || item.node_status==3}}" style='color:#{{item.node_status==3?"fd343e":"feae33"}};'>{{item.node_status==3?"延期":"开始日期"}}：<text style='font-weight:normal;color:#676767;'>{{item.start_time}}</text></text>
 
             <text class='nodeState' wx:if="{{item.node_status!=1 && item.node_status!=2 && item.node_status!=3}}" style='font-weight:normal;color:#676767;font-size:22rpx;'>工程状态：<text style='font-size:24rpx;color:#609bff;font-weight:bold;'>计划中</text></text>
-
           </view>
         </block>
       </view>
@@ -83,20 +86,24 @@
         <text class='nodeEmptyText1'>很遗憾！您未在工程合同中购买木作产品</text>
       </view>
       <!-- 左侧竖线 -->
-      <view class='nodeListBoxLeftLine' wx:if="{{projectData[2]}}" style='height:{{tab2Length*110-40}}rpx;'><text class='line40'></text><text class='line100'></text><text class='line40'></text></view>
+      <view class='nodeListBoxLeftLine' wx:if="{{projectData[2]}}" style='height:{{tab2Length*110-40}}rpx;'>
+        <text class='line40'></text>
+        <text class='line100'></text>
+        <text class='line40'></text>
+      </view>
       <!-- 右侧数据大盒子 -->
       <view class='nodeListBoxRight' wx:if="{{projectData[2]}}">
         <block wx:for="{{projectData[2].node}}" wx:key="">
-          <view class='nodeList' catchtap='seeDetails' data-list='{{item.first}}' data-state='{{item.node_status}}' data-idx='{{index}}' data-nid='{{item.id}}'>
+          <view class='nodeList' catchtap='seeDetails' data-list='{{item.first}}' data-state='{{item.node_status}}' data-idx='{{index}}' data-nid='{{item.id}}' style='background:#{{item.node_status==2?"eefbf3":(item.node_status==1 || item.node_status==3)?"eef5ff":"eef5ff"}};'>
             <!-- 标识点 -->
             <text class='nodeListDot' style='background:#{{item.node_status==2?"56db88":(item.node_status==1 || item.node_status==3)?"feae33":"609bff"}};'></text>
             <view class='nodeListLeftBg' style='background:#{{item.node_status==2?"56db88":(item.node_status==1 || item.node_status==3)?"feae33":"609bff"}};'></view>
             <text class='nodeName'>{{item.node_name}}</text>
-            <text class='nodeState' wx:if="{{item.node_status==2}}" style='color:#56db88;'>完成日期：<text style='font-weight:normal;color:#676767;'>{{item.plan_end_time}}</text></text>
+            <text class='nodeState' wx:if="{{item.node_status==2}}" style='color:#56db88;'>完成日期：<text style='font-weight:normal;color:#676767;'>{{item.end_time}}</text></text>
 
-            <text class='nodeState' wx:if="{{item.node_status==1 || item.node_status==3}}" style='color:#feae33;'>开始日期：<text style='font-weight:normal;color:#676767;'>{{item.plan_end_time}}</text></text>
+            <text class='nodeState' wx:if="{{item.node_status==1 || item.node_status==3}}" style='color:#{{item.node_status==3?"fd343e":"feae33"}};'>{{item.node_status==3?"延期":"开始日期"}}：<text style='font-weight:normal;color:#676767;'>{{item.start_time}}</text></text>
 
-            <text class='nodeState' wx:if="{{item.node_status!=1 && item.node_status!=2 && item.node_status!=3}}" style='font-weight:normal;color:#676767;font-size:22rpx;'>工程状态：<text style='font-size:24rpx;color:#609bff;font-weight:bold;'>计划中</text></text>
+            <text class='nodeState' wx:if="{{item.node_status!=1 && item.node_status!=2 && item.node_status!=3}}" style='font-weight:normal;color:#676767;font-size:22rpx;'>木作状态：<text style='font-size:24rpx;color:#609bff;font-weight:bold;'>计划中</text></text>
 
           </view>
         </block>
@@ -104,7 +111,8 @@
     </view>
   </view>
   <!-- 工作人员按钮 -->
-  <button class='btn-reset detailsBtn1' catchtap='nodeAccomplish' wx:if="{{permiss.b_permission!=''}}">节点完成申请</button>
+  <button class='btn-reset detailsBtn1' catchtap='nodeAccomplish' wx:if="{{is_apply1 && nodeTitleIndex==1 && permiss.b_permission!=''}}">节点完成申请</button>
+  <button class='btn-reset detailsBtn1' catchtap='nodeAccomplish' wx:if="{{is_apply2 && nodeTitleIndex==2 && permiss.b_permission!=''}}">节点完成申请</button>
 </view>
 <!-- 协议签订 -->
 <view class='zhezhao' wx:if="{{popState1}}">
@@ -126,34 +134,58 @@
     <view class='pop2Top'>
       <image class='pop2Img1' src='/images/img9.png'></image>
       <view class='pop2TopBotoom'>
-        <text class='pop2Text1'>{{nextData.node_name}}</text>
-        <image class='pop2Img2' src='/images/img10.png'></image>
         <text class='pop2Text1'>{{nowData.node_name}}</text>
+        <image class='pop2Img2' src='/images/img10.png'></image>
+        <text class='pop2Text1'>{{nowData.sort==nodeLength?"完成":nextData.node_name}}</text>
       </view>
     </view>
     <view class='pop2Center'>
       <text class='pop2Text2'>请确认施工完成\n相关材料交至客服部后，进行申请。</text>
-      <view class='pop2Camera' wx:if="{{cameraData.length!=0}}">
+      <!-- 工程 -->
+      <view class='pop2Camera' wx:if="{{cameraData.length!=0 && nodeTitleIndex ==1}}">
         <swiper class='swiper-box' indicator-dots="true" circular="true">
           <!-- <block wx:for="{{cameraData.length/3}}" wx:key=""> -->
-            <swiper-item class="pop2Item" wx:if="{{cameraData.length!=0}}">
-              <image src='{{cameraData[0]}}' mode='aspectFit' class='cameraImg'></image>
-              <image src='{{cameraData[1]}}' mode='aspectFit' class='cameraImg'></image>
-              <image src='{{cameraData[2]}}' mode='aspectFit' class='cameraImg'></image>
-            </swiper-item>
-            <swiper-item class="pop2Item" wx:if="{{cameraData.length>3}}">
-              <image src='{{cameraData[3]}}' mode='aspectFit' class='cameraImg'></image>
-              <image src='{{cameraData[4]}}' mode='aspectFit' class='cameraImg'></image>
-              <image src='{{cameraData[5]}}' mode='aspectFit' class='cameraImg'></image>
-            </swiper-item>
-            <swiper-item class="pop2Item" wx:if="{{cameraData.length>6}}">
-              <image src='{{cameraData[6]}}' mode='aspectFit' class='cameraImg'></image>
-              <image src='{{cameraData[7]}}' mode='aspectFit' class='cameraImg'></image>
-              <image src='{{cameraData[8]}}' mode='aspectFit' class='cameraImg'></image>
-            </swiper-item>
+          <swiper-item class="pop2Item" wx:if="{{cameraData.length!=0}}">
+            <image src='{{cameraData[0]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData}}' data-nowimg="{{cameraData[0]}}"></image>
+            <image src='{{cameraData[1]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData}}' data-nowimg="{{cameraData[1]}}"></image>
+            <image src='{{cameraData[2]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData}}' data-nowimg="{{cameraData[2]}}"></image>
+          </swiper-item>
+          <swiper-item class="pop2Item" wx:if="{{cameraData.length>3}}">
+            <image src='{{cameraData[3]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData}}' data-nowimg="{{cameraData[3]}}"></image>
+            <image src='{{cameraData[4]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData}}' data-nowimg="{{cameraData[4]}}"></image>
+            <image src='{{cameraData[5]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData}}' data-nowimg="{{cameraData[5]}}"></image>
+          </swiper-item>
+          <swiper-item class="pop2Item" wx:if="{{cameraData.length>6}}">
+            <image src='{{cameraData[6]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData}}' data-nowimg="{{cameraData[6]}}"></image>
+            <image src='{{cameraData[7]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData}}' data-nowimg="{{cameraData[7]}}"></image>
+            <image src='{{cameraData[8]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData}}' data-nowimg="{{cameraData[8]}}"></image>
+          </swiper-item>
           <!-- </block> -->
         </swiper>
       </view>
+      <!-- 木作 -->
+      <view class='pop2Camera' wx:if="{{cameraData2.length!=0 && nodeTitleIndex ==2}}">
+        <swiper class='swiper-box' indicator-dots="true" circular="true">
+          <!-- <block wx:for="{{cameraData.length/3}}" wx:key=""> -->
+          <swiper-item class="pop2Item" wx:if="{{cameraData2.length!=0}}">
+            <image src='{{cameraData2[0]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData2}}' data-nowimg="{{cameraData2[0]}}"></image>
+            <image src='{{cameraData2[1]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData2}}' data-nowimg="{{cameraData2[1]}}"></image>
+            <image src='{{cameraData2[2]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData2}}' data-nowimg="{{cameraData2[2]}}"></image>
+          </swiper-item>
+          <swiper-item class="pop2Item" wx:if="{{cameraData2.length>3}}">
+            <image src='{{cameraData2[3]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData2}}' data-nowimg="{{cameraData2[3]}}"></image>
+            <image src='{{cameraData2[4]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData2}}' data-nowimg="{{cameraData2[4]}}"></image>
+            <image src='{{cameraData2[5]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData2}}' data-nowimg="{{cameraData2[5]}}"></image>
+          </swiper-item>
+          <swiper-item class="pop2Item" wx:if="{{cameraData2.length>6}}">
+            <image src='{{cameraData2[6]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData2}}' data-nowimg="{{cameraData2[6]}}"></image>
+            <image src='{{cameraData2[7]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData2}}' data-nowimg="{{cameraData2[7]}}"></image>
+            <image src='{{cameraData2[8]}}' mode='aspectFit' class='cameraImg' catchtap='seeImg' data-list='{{cameraData2}}' data-nowimg="{{cameraData2[8]}}"></image>
+          </swiper-item>
+          <!-- </block> -->
+        </swiper>
+      </view>
+
       <button class='btn-reset pop2Btn1' catchtap='camera'>拍摄</button>
       <!-- <camera device-position="back" flash="off" binderror="error" class='pop2Btn1'>拍摄</camera> -->
       <view class='pop2CenterBottom'>
@@ -171,9 +203,10 @@
       <text class='pop3Text1'>{{pop1Data.node_name}}</text>
       <image class='pop3Img1' src='/images/img8.png'></image>
     </view>
-    <!-- 1完成 2进展中 3延期 0计划中 -->
+    <!-- 2完成 1进展中 3延期 0计划中 -->
     <text class='pop3Text2' wx:if="{{ (pop1NameState==3 || pop1NameState==1 || pop1NameState==0)&& pop1ClickIdx!=1}}">计划开始日期：<text class='pop1Text3'>{{pop1Data.plan_start_time}}</text></text>
-    <text class='pop3Text2' >{{pop1NameState==2?'':'计划'}}完成日期：<text class='pop1Text3'>{{pop1Data.plan_end_time}}</text></text>
+    <!-- &&pop1ClickIdx!=1 -->
+    <text class='pop3Text2'>{{pop1NameState==2?'':'计划'}}完成日期：<text class='pop1Text3'>{{pop1NameState==2?pop1Data.end_time:pop1Data.plan_end_time}}</text></text>
     <text class='pop3Text2' wx:if="{{pop1NameState==3 || pop1NameState==1}}">开始日期：<text class='pop1Text3'>{{pop1Data.start_time}}</text></text>
     <text class='pop3Text2'>节点负责人：<text class='pop1Text3'>{{pop1Data.personal_name}}</text></text>
     <text class='pop3Text2' wx:if="{{pop1NameState==2 && pop1ClickIdx!=1}}" pop1NameState>节点申请人：<text class='pop1Text3'>{{pop1Data.detail_name}}</text></text>

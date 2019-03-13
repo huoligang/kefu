@@ -59,7 +59,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
     var that = this;
     var p_id = options.p_id;
     fn.http({
@@ -71,29 +70,38 @@ Page({
         var res = res;
         var tab1Length=0;
         var tab2Length=0;
-        console.log()
         that.setData({
           projectData: res.data,
           p_id: p_id
         })
-        var alength;
-        var blength;
-        var clength;
+        var alength=0;
+        var blength=0;
+        var clength=0;
         // alength = res.data.personals.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
         // blength = res.data.team.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
         // clength = res.data.engineering.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
-        alength = Math.ceil(res.data.personals.length / 2);
-        blength = Math.ceil(res.data.team.length / 2);
-        clength = Math.ceil(res.data.engineering.length / 2);
-
+        for (var q in res.data.personals) {
+          alength++
+        }
+        for (var q in res.data.team) {
+          blength++
+        }
+        for (var q in res.data.engineering) {
+          clength++
+        }
+        alength = Math.ceil(alength / 2);
+        blength = Math.ceil(blength / 2);
+        clength = Math.ceil(clength / 2);
         for (var i in res.data[1].node) {
           if (i) {
             tab1Length++
           }
         }
-        for (var j in res.data[2].node) {
-          if (j) {
-            tab2Length++
+        if (res.data[2]) {
+          for (var j in res.data[2].node) {
+            if (j) {
+              tab2Length++
+            }
           }
         }
         that.setData({
@@ -101,7 +109,6 @@ Page({
           tab2Length: tab2Length,
           headHeight: alength + blength + clength - 3
         })
-        console.log()
       }
     })
   },
@@ -111,9 +118,7 @@ Page({
     var list = res.currentTarget.dataset.list;
     var state = res.currentTarget.dataset.state;
     var idx = res.currentTarget.dataset.idx;
-    console.log(state)
     that.setData({ popState1: true, pop1Data: list, pop1NameState: state, pop1ClickIdx: idx })
-    console.log(list)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -15,7 +15,8 @@ Page({
     nodeTitleIndex: 1,//节点类型 1工程 2木作
     carpentryState: false,//木作节点是否有数据 空false 非空true
     // cameraData: ['/images/img2.jpg', '/images/img2.jpg', '/images/img2.jpg', '/images/img2.jpg']
-    cameraData:[]
+    cameraData:[],
+    cameraData2:[]
   },
   toggle: function () {
     var that = this;
@@ -60,35 +61,72 @@ Page({
         var res = res;
         var tab1Length = 0;
         var tab2Length = 0;
-        console.log()
+        var projectData = res.data;
         that.setData({
           projectData: res.data,
           p_id: p_id
         })
-        var alength;
-        var blength;
-        var clength;
+        var alength=0;
+        var blength=0;
+        var clength=0;
+        var aaEm = 0;
+        var bbEm = 0;
+        var ccEm = 0;
+        if (res.data.personals) { aaEm=1}
+        if (res.data.team) { bbEm = 1 }
+        if (res.data.engineering) { ccEm = 1 }
         // alength = res.data.personals.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
         // blength = res.data.team.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
         // clength = res.data.engineering.length % 2 == 0 ? res.data.personals.length / 2 : res.data.personals.length % 2;
-        alength = Math.ceil(res.data.personals.length / 2);
-        blength = Math.ceil(res.data.team.length / 2);
-        clength = Math.ceil(res.data.engineering.length / 2);
-        
+        for (var q in res.data.personals){
+          alength++
+        }
+        for (var q in res.data.team) {
+          blength++
+        }
+        for (var q in res.data.engineering) {
+          clength++
+        }
+        alength = Math.ceil(alength / 2);
+        blength = Math.ceil(blength / 2);
+        clength = Math.ceil(clength / 2);
         for (var i in res.data[1].node) {
           if (i) {
             tab1Length++
           }
         }
-        for (var j in res.data[2].node) {
-          if (j) {
-            tab2Length++
+        if (res.data[2]){
+          for (var j in res.data[2].node) {
+            if (j) {
+              tab2Length++
+            }
           }
-        }
+        }        
         that.setData({
           tab1Length: tab1Length,
           tab2Length: tab2Length,
-          headHeight: alength + blength + clength-3
+          headHeight: alength + blength + clength-3,
+          emHeight: aaEm + bbEm + 0
+        })
+        //是否显示节点完成申请
+        var proData = res.data
+        var is_apply1 = false;
+        var is_apply2 = false;
+        for (var i in proData[1].node) {
+          if (proData[1].node[i].node_status == 1 || proData[1].node[i].node_status == 3) {
+            is_apply1 = true;
+          }
+        }
+        if (proData[2]){
+          for (var j in proData[2].node) {
+            if (proData[2].node[j].node_status == 1 || proData[2].node[j].node_status == 3) {
+              is_apply2 = true;
+            }
+          }
+        }
+        that.setData({
+          is_apply1: is_apply1,
+          is_apply2: is_apply2
         })
       }
     })
@@ -168,6 +206,14 @@ Page({
   // 拍摄按钮
   camera(res){
     var that = this;
+    var cameraData = that.data.nodeTitleIndex == 1 ? that.data.cameraData : that.data.cameraData2
+    if (cameraData.length>8){
+      wx.showModal({
+        title: '提示',
+        content: '最多选择9张图片',
+      })
+      return false
+    }
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
@@ -176,9 +222,9 @@ Page({
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths;
         that.setData({
-          cameraData: that.data.cameraData.concat(tempFilePaths)
+          cameraData: that.data.nodeTitleIndex == 1 ? that.data.cameraData.concat(tempFilePaths) : that.data.cameraData,
+          cameraData2: that.data.nodeTitleIndex == 2 ? that.data.cameraData2.concat(tempFilePaths) : that.data.cameraData2
         })
-        console.log(that.data.cameraData)
       }
     })
   },
@@ -186,14 +232,14 @@ Page({
   seeDetails(res) {
     var that = this;
     var list = res.currentTarget.dataset.list;
-    console.log(list)
     var state = res.currentTarget.dataset.state;
     var idx = res.currentTarget.dataset.idx;
     var idx2 = res.currentTarget.dataset.idx-0-1;
     var permiss = app.globalData.permiss;
-    var projectData = that.data.projectData[1].node[idx2] ? that.data.projectData[1].node[idx2]:'';
+    var tabIndex = that.data.nodeTitleIndex;
+    var projectData = that.data.projectData[tabIndex].node[idx2] ? that.data.projectData[tabIndex].node[idx2]:'';
     if (projectData.node_status == 2 && !state && permiss.a_permission!=""){
-      that.setData({ popState1: true, pop1Data: list, n_id: res.currentTarget.dataset.nid})
+      that.setData({ popState1: true, pop1Data: list, n_id: res.currentTarget.dataset.nid, pop1ClickIdx: idx })
     } else if (permiss.a_permission != ""){
       that.setData({ popState3: true, pop1Data: list, pop1NameState: state, pop1ClickIdx: idx })
     }else{
@@ -210,17 +256,22 @@ Page({
     var tabIndex = that.data.nodeTitleIndex;
     var nowData;
     var nextData;
+    var nodeLength=0;
+    var once=true
     for (var i in proData[tabIndex].node){
-      if (proData[tabIndex].node[i].node_status==1){
+      nodeLength++
+      if (proData[tabIndex].node[i].node_status == 1 || proData[tabIndex].node[i].node_status == 3){
         nowData = proData[tabIndex].node[i]
       }
-      if (proData[tabIndex].node[i].node_status == 2) {
-        nextData = proData[tabIndex].node[i]
+      if (proData[tabIndex].node[i].node_status == 0 && once) {
+        nextData = proData[tabIndex].node[i];
+        once=false
       }
     }
     that.setData({
       nowData:nowData,
-      nextData: nextData
+      nextData: nextData,
+      nodeLength: nodeLength
     })
   },
   // 完工申请按钮
@@ -228,55 +279,67 @@ Page({
     var that = this;
     var imgData;
     var details_image;
-    if (that.data.cameraData==""){
-      wx.showModal({
-        title: '提示',
-        content: '请添加图片',
-        showCancel: false
+    var cameraData = that.data.nodeTitleIndex == 1 ? that.data.cameraData : that.data.cameraData2;
+    if ((that.data.nodeTitleIndex == 1 ? that.data.cameraData : that.data.cameraData2) ==""){
+      // wx.showModal({
+      //   title: '提示',
+      //   content: '请添加图片',
+      //   showCancel: false
+      // })
+      fn.http({
+        url: app.globalData.txUrl + '/ProjectEnd',
+        param: {
+          project_id: that.data.p_id,  
+          project_name: app.globalData.proData.project_name,
+          rule_id: that.data.nowData.id,
+          personal_id: app.globalData.userMsgState,
+          personal_name: app.globalData.user_name,
+          // sum: 0
+        },
+        success: function (res) {
+          that.setData({
+            popState2: false
+          })
+          wx.showToast({
+            title: '成功',
+          })
+        }
       })
     } else{
       wx.showLoading({
         title: '上传中',
       })
-      var once = true
-      for (var i in that.data.cameraData){
-        if (once){
-          imgData = {
-            // details_image: that.data.cameraData,
-            project_id: that.data.p_id,  //rule_id personal_id  
-            project_name: app.globalData.proData.project_name,
-            rule_id: that.data.nowData.id,
-            personal_id: app.globalData.user_id,
-            personal_name: app.globalData.user_name,
-            sum:1
-            // type_id: that.data.nodeTitleIndex,
-          }
-          once= false
-        }else{
-          imgData = {
-            // details_image: that.data.cameraData,
-            project_id: that.data.p_id,  //rule_id personal_id  
-            project_name: app.globalData.proData.project_name,
-            rule_id: that.data.nowData.id,
-            personal_id: app.globalData.user_id,
-            personal_name: app.globalData.user_name,
-            sum:2
-            // type_id: that.data.nodeTitleIndex,
-          }
+      var once = true;
+      var sort = 1;
+      for (var i in cameraData){
+        console.log()
+        imgData = {
+          // details_image: that.data.cameraData,
+          project_id: that.data.p_id,  //rule_id personal_id  
+          project_name: app.globalData.proData.project_name,
+          rule_id: that.data.nowData.id,
+          rule_name: that.data.nowData.node_name,
+          personal_id: app.globalData.userMsgState,
+          personal_name: app.globalData.user_name,
+          sum: cameraData.length,
+          sort:sort
+          // type_id: that.data.nodeTitleIndex,
         }
+        sort++
         wx.uploadFile({
           url: app.globalData.txUrl + '/ProjectEnd',
-          filePath: that.data.cameraData[i],
+          filePath: cameraData[i],
           name: 'file',
           method: 'POST',
           formData: imgData,
           success: res => {
-            console.log(res)
           }
         })
       }
       that.setData({
-        popState2:false
+        popState2:false,
+        cameraData: that.data.nodeTitleIndex == 1 ? [] : that.data.cameraData,
+        cameraData2: that.data.nodeTitleIndex == 2 ? [] : that.data.cameraData2,
       })
       that.getProDetail(that.data.p_id);
       wx.hideLoading();
@@ -305,6 +368,16 @@ Page({
         // 获取项目详情
         that.getProDetail(that.data.p_id);
       }
+    })
+  },
+  // 看图片
+  seeImg(res){
+    var that = this;
+    var nowImg = res.currentTarget.dataset.nowimg;
+    var list = res.currentTarget.dataset.list;
+    wx.previewImage({
+      current: nowImg, // 当前显示图片的http链接
+      urls: list // 需要预览的图片http链接列表
     })
   }
 })

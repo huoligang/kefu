@@ -17,22 +17,29 @@ Page({
   onLoad: function (options) {
     var that = this;
     var sis = wx.getSystemInfoSync();
-    console.log(sis)
-    if(app.globalData.userState==3){
+    app.getUserOpenId().then(function () {
+      if (app.globalData.userState == 3) {
+        that.setData({
+          tab: 2
+        })
+        wx.hideLoading();
+      } else if (app.globalData.userState == 1) {
+        that.setData({
+          tab: 1,
+          proUrl:'/ProjectPersonal'
+        })
+        that.getProjectPersonal('/ProjectPersonal');
+      } else {
+        that.setData({
+          tab: 1,
+          proUrl: '/ProjectCustomer'
+        })
+        that.getProjectPersonal('/ProjectCustomer');
+      }
       that.setData({
-        tab:2
+        userState: app.globalData.userState
       })
-    } else if (app.globalData.userState == 1){
-      that.setData({
-        tab: 1
-      })
-      that.getProjectPersonal('/ProjectPersonal'); 
-    }else{
-      that.setData({
-        tab: 1
-      })
-      that.getProjectPersonal('/ProjectCustomer');
-    }
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -47,7 +54,6 @@ Page({
     var that = this;
     if(res.detail.userInfo && that.data.userPhone.length==11){
       var userInfo = res.detail.userInfo;
-      console.log(userInfo)
       fn.http({
         url: app.globalData.txUrl + '/MemberMesg',
         param: { 
@@ -66,21 +72,15 @@ Page({
               param: {user_id: app.globalData.user_id},
               url: app.globalData.txUrl + '/CustomerWexx',
               success: function (res) {
-                console.log(res)
                 app.globalData.userState = res.code,//1服务人员 2客户 3普通人员
+                app.globalData.userMsgState = res.id,//人员身份ID
                 app.globalData.userStateName = res.msg
                 app.globalData.userPhone = res.phone;
+                app.globalData.user_name = res.personal_name;//用户名称
                 that.setData({
                   userState: app.globalData.userState
                 })
                 var listUrl;
-                // if (app.globalData.userState==1){
-                //   listUrl = app.globalData.txUrl + 'ProjectPersonal'
-                // } else if (app.globalData.userState == 2){
-
-                // }else{
-                //   that.searchPro();
-                // }
                 if (app.globalData.userState == 3) {
                   that.setData({
                     tab: 2
@@ -88,12 +88,14 @@ Page({
                   that.searchPro();
                 } else if (app.globalData.userState == 1) {
                   that.setData({
-                    tab: 1
+                    tab: 1,
+                    proUrl:'/ProjectPersonal'
                   })
                   that.getProjectPersonal('/ProjectPersonal');
                 } else {
                   that.setData({
-                    tab: 1
+                    tab: 1,
+                    proUrl: '/ProjectCustomer'
                   })
                   that.getProjectPersonal('/ProjectCustomer');
                 }
@@ -119,10 +121,35 @@ Page({
     that.setData({ userPhone: res.detail.value})
   },
   onShow: function () {
-    var that = this;
-    that.setData({
-      userState: app.globalData.userState
+    wx.showLoading({
+      title: '加载中',
     })
+    var that = this;
+    if (app.globalData.userState){
+      that.setData({
+        userState: app.globalData.userState
+      })
+      if (app.globalData.userState == 3) {
+        that.setData({
+          tab: 2
+        })
+        wx.hideLoading();
+      } else if (app.globalData.userState == 1) {
+        that.setData({
+          tab: 1,
+          proUrl: '/ProjectPersonal'
+        })
+        
+        that.getProjectPersonal('/ProjectPersonal');
+      } else {
+        that.setData({
+          tab: 1,
+          proUrl: '/ProjectCustomer'
+        })
+        that.getProjectPersonal('/ProjectCustomer');
+      }
+    }
+    
   },
   // 获取项目列表
   getProjectPersonal(url) {
@@ -133,10 +160,16 @@ Page({
         wei_phone: app.globalData.userPhone,
       },
       success: function (res) {
-        that.setData({
-          fwListData: res.project.project,
-          permiss: res.project
-        })
+        wx.hideLoading();
+        if(!res.code){
+
+        }else{
+          that.setData({
+            fwListData: res.project.project,
+            permiss: res.project
+          })
+        }
+        
       }
     })
   },
@@ -158,7 +191,29 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    // var that = this;
+    // 获取项目列表
+    // getProjectPersonal(url) {
+      var that = this;
+      fn.http({
+        url: app.globalData.txUrl + that.data.proUrl,
+        param: {
+          wei_phone: app.globalData.userPhone,
+        },
+        success: function (res) {
+          wx.stopPullDownRefresh();
+          if (!res.code) {
 
+          } else {
+            that.setData({
+              fwListData: res.project.project,
+              permiss: res.project
+            })
+          }
+
+        }
+      })
+    // },
   },
 
   /**
@@ -178,7 +233,8 @@ Page({
   againSearch(res){
     var that = this;
     that.setData({
-      searchNoState: false
+      searchNoState: false,
+      userPhone: ""
     })
   },
   // 查看详情
@@ -191,6 +247,7 @@ Page({
     if (app.globalData.userState == 1 && permiss.c_permission!=""){
       wx.navigateTo({
         url: '../operation/operation?p_id='+p_id,//业务人员
+        // url: '../details/details?p_id=' + p_id,//客户
         success: function (res) { },
         fail: function (res) { },
         complete: function (res) { },

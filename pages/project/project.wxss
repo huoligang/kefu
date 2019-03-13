@@ -4,6 +4,16 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  position: relative;
+  padding-bottom: 28rpx;
+}
+.pbgImg{
+  width: 100%;
+  height: 270rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
 }
 .proList{
   width: 690rpx;
@@ -43,7 +53,7 @@
   white-space: nowrap;
 }
 .proRightBox{
-  width: 220rpx;
+  width: 250rpx;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -63,12 +73,14 @@
   width: 690rpx;
   height: 530rpx;
   border-radius: 10px;
-  /* background: red; */
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 105rpx;
   box-shadow: 0 5px 5px #cccccc;
+  position: relative;
+  z-index: 2;
 }
 .phonePopText1{
   width: 590rpx;
